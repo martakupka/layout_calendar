@@ -1,3 +1,52 @@
+@import "variables";
+
 body {
   margin: 0;
+}
+
+.calendar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: ($cellSize + $cellGap) * 7;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@each $days in $monthDays {
+  @for $i from 1 through $days {
+    .calendar-#{$days} :nth-child(#{$i}) {
+      display: block;
+      width: $cellSize;
+      height: $cellSize;
+      box-sizing: border-box;
+      margin-right: $cellGap;
+      margin-bottom: $cellGap;
+      background-color: #eee;
+      border: 1px solid black;
+      transition: transform 0.5s, background-color 0.5s;
+
+      &::after {
+        display: block;
+        text-align: center;
+        content: "#{$i}";
+        font-size: 30px;
+        line-height: $cellSize;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: pink;
+        transform: translate(0, -20px);
+      }
+    }
+  }
+}
+
+@each $name, $value in $weekDays {
+  .calendar-#{$name} :first-child {
+    margin-left: ($cellSize + $cellGap) * $value;
+  }
 }
